@@ -9,7 +9,9 @@
     export let selected = new Date();
     $: selected  = (typeof selected === 'string') ? new Date(parseInt(selected)) : selected;
 
-    export let isallowed = (date) => {return date.getTime() <= dateNow()};
+    export let isAllowed = (date) => {return date.getTime() <= dateNow()};
+
+    export let theme = "light"
 
     export let locale = 'en-EN';
     $: locale = (locale) => {
@@ -73,7 +75,7 @@
 
     const allow = (year, month, date) => {
         if (!date) return true;
-        return isallowed(new Date(year, month, date));
+        return isAllowed(new Date(year, month, date));
     };
 
     $: cells = getDateRows(month, year).map(c => ({
@@ -88,11 +90,11 @@
         <div class="box">
             <div class="month-name">
                 <div>
-                    <button type=text on:click={prev}>{@html iconLeft}</button>
+                    <button type=text on:click|preventDefault={prev}>{@html iconLeft}</button>
                 </div>
                 <div class="center">{monthNames[month]} {year}</div>
                 <div>
-                    <button type=text on:click={next}>{@html iconRight}</button>
+                    <button type=text on:click|preventDefault={next}>{@html iconRight}</button>
                 </div>
             </div>
             <!-- Calendar -->
@@ -119,16 +121,24 @@
 
         </div>
     {/if}
-    <input type="text" size="14" on:focus={onFocus} value={convertSelected(selected)}/>
+    <input class={theme} type="text" size="14" on:focus={onFocus} value={convertSelected(selected)}/>
 </div>
 
 <style>
-    input {
+    input.light {
         outline: none;
         border: 1px solid #999999;
-        background-color: inherit;
         font-weight: 300;
         cursor: pointer;
+    }
+
+    input.dark {
+        outline: none;
+        border: 1px solid #999999;
+        background-color: #212121;
+        font-weight: 300;
+        cursor: pointer;
+        color: whitesmoke
     }
 
     .relative {
