@@ -121,7 +121,7 @@
 
         </div>
     {/if}
-    <input class={theme} type="text" size="14" on:focus={onFocus} value={convertSelected(selected)}/>
+    <input class="{theme} form-control" type="text" size="14" on:focus={onFocus} value={convertSelected(selected)}/>
 </div>
 
 <style>
